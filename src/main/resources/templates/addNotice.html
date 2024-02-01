@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header"></head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">添加公告</h1>
+
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a th:href="@{/toAdminMain}">主页</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/class/selClass}">公告管理</a></li>
+                    <li class="breadcrumb-item active">添加公告</li>
+                </ol>
+
+                <div class="card mb-4">
+
+                    <form th:action="@{/uploadNotice}" method="post" name="addForm"
+                          onsubmit="return beforeSubmit(this)" enctype="multipart/form-data">
+                        <table class="table table-hover">
+                            <tr>
+                                <td text-align="center">标题</td>
+                                <td><input type="text" class="form-control" placeholder="公告名称" name="title">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">内容</td>
+                                <td><input type="text" class="form-control" name="content">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">创建者</td>
+                                <td><input type="text" class="form-control"  name="publishName">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">类型</td>
+                                <td><input type="text" class="form-control" placeholder="（1 通知 2 公告）" name="type">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">状态</td>
+                                <td><input type="text" class="form-control" placeholder="公告状态（0 正常 1 关闭）" name="status">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">备注</td>
+                                <td><input type="text" class="form-control"  name="remark">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td text-align="center">上传图片</td>
+                                <td><input type="file" multiple class="form-control"  name="photos">
+                                </td>
+                            </tr>
+                        </table>
+                        <div style="text-align:center;margin-top:20px;margin-bottom:20px">
+                            <input type="submit" class="btn btn-outline-success" value="添加">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script type="text/javascript">
+    function beforeSubmit(addForm) {
+        if (addForm.classId.value == "") {
+            alert("请输入公告编号！")
+            return false;
+        }
+        if (addForm.className.value == "") {
+            alert("请输入公告名称！")
+            return false;
+        }
+        if (addForm.classBegin.value == "") {
+            alert("请输入公告时间！")
+            return false;
+        }
+        if (addForm.classTime.value == "") {
+            alert("请输入公告时长！")
+            return false;
+        }
+        if (addForm.coach.value == "") {
+            alert("请输入教练！")
+            return false;
+        }
+        return true;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html ang="ch" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"/></head>
+<body>
+<!-- 弹窗代码开始 -->
+<div class="web_notice" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.3); z-index: 99999;">
+    <div style="position: fixed; top: 50%; left: 50%; width: 320px; background: #FFF; transform: translate(-50%, -50%); border-radius: 40px; padding: 50px 40px;">
+        <button style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;" onclick="closePopup();">×</button>
+        <h3 style="font-weight: bold; text-align: center; font-size: 30px;">公告通知</h3>
+        <div>标题：<div  id="title1"></div></div>
+        <div id="content" style="font-size: 16px; margin-top: 26px; line-height: 30px; color: #999;">
+            公告内容：<div  id="content1"></div><br>
+           <div style="position: relative;top: 60px;left: 100px"  >创建时间:<div id="createTime1" ></div></div>
+            <button id="button1">下一条</button>
+            <p><a th:href="@{/getNoticeList}" target="_blank" style="display: block; text-align: center; font-weight: bold; font-size: 19px; line-height: 60px; margin: 0 auto; margin-top: 45px; border-radius: 32px; width: 80%;" onclick="redirectUrlToActive();" rel='nofollow'>已阅</a></p>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:inline="javascript">
+    let i=0;
+    const notices=/*[[${notices}]]*/
+        console.log(notices)
+    const btns1=document.querySelector('#button1')
+    const title1=document.querySelector('#title1')
+    const content1=document.querySelector('#content1')
+    const createTime1=document.querySelector('#createTime1')
+
+    btns1.addEventListener('click',function (){
+        title1.innerHTML=notices[i].title
+        content1.innerHTML=notices[i].content
+         // 2023年02月18日 21:49:05
+        createTime1.innerHTML=notices[i].createdTime
+        i++
+    })
+
+    function closePopup() {
+        document.querySelector('.web_notice').style.display = 'none';
+    }
+</script>
+<!-- 弹窗代码结束 -->
+</html>

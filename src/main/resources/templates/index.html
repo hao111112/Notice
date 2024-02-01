@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="adminCommon::common-header">
+
+        <style>
+        .ellipsis {
+            white-space: nowrap; /* 禁止换行 */
+            overflow: hidden; /* 隐藏超出部分 */
+            text-overflow: ellipsis; /* 显示省略号 */
+            max-width: 100px; /* 设置最大宽度，根据需要调整 */
+        }
+        </style>
+
+
+</head>
+<body class="sb-nav-fixed">
+<nav th:replace="adminCommon::common-navbar"></nav>
+<div id="layoutSidenav">
+    <div th:replace="adminCommon::common-sidenav"></div>
+
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <h1 class="mt-4">公告管理</h1>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        公告信息表
+                    </div>
+                    <div class="card-body">
+                        <table id="datatablesSimple" width="100%"  style="table-layout:fixed">
+
+                            <thead>
+
+                                <tr >
+                                    <th>标题</th>
+                                    <th>内容</th>
+                                    <th>创建者</th>
+                                    <th>创建时间</th>
+                                    <th>更新人</th>
+                                    <th>更新时间</th>
+                                    <th>类型</th>
+                                    <th>状态</th>
+                                    <th>备注</th>
+
+                                </tr>
+                                </thead>
+                                <br>
+                                <tbody>
+                                <tr th:each="class:${notices}">
+                                    <td th:text="${class.title}" class="title"><a href="">标题</a></td>
+                                    <td th:text="${class.content}"class=".ellipsis" >内容</td>
+                                    <td th:text="${class.publishName}">创建者</td>
+                                    <td th:text="${#dates.format(class.createdTime, 'yyyy-MM-dd HH:mm')}">创建时间</td>
+                                    <td th:text="${class.updateName}">更新人</td>
+                                    <td th:text="${#dates.format(class.updateTime, 'yyyy-MM-dd HH:mm')}">更新时间</td>
+                                    <td th:text="${class.type}">类型</td>
+                                    <td th:text="${class.status}">状态</td>
+                                    <td th:text="${class.remark}">备注</td>
+                                    <td>
+                                        <a th:href="@{/toUpdateNotice(nid=${class.nid})}"
+                                           style="text-decoration: none">
+                                            <input type="button" class="btn btn-sm btn-outline-primary" value="编辑">
+                                        </a>
+                                        <a th:href="@{/delNotice(nid=${class.nid})}"
+                                           style="text-decoration: none">
+                                            <input type="button" class="btn btn-sm btn-outline-danger"
+                                                   onclick="return del()" value="删除">
+                                        </a>
+                                    </td>
+                                    <br>
+                                </tr>
+                                </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:20px;margin-bottom:20px">
+                    <a th:href="@{/notice/toAddNotice}">
+                        <input type="button" class="btn btn-outline-success" value="添加公告">
+                    </a>
+                </div>
+            </div>
+        </main>
+        <footer th:replace="adminCommon::common-footer"></footer>
+    </div>
+</div>
+
+<div th:include="adminCommon::common-scripts"></div>
+<script>
+    function del() {
+        let msg = "确定要删除吗？";
+        if (confirm(msg) == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>
